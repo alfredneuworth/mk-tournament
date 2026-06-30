@@ -64,6 +64,21 @@
   .tag.a{background:rgba(255,194,122,0.15);color:var(--adult);}
   .tbd{font-size:13px;color:#7a8aa8;font-style:italic;text-align:center;padding:14px;}
 
+  /* results */
+  .heat li .pos{width:19px;height:19px;border-radius:50%;flex:none;display:flex;
+    align-items:center;justify-content:center;font-size:11px;font-weight:800;
+    background:#2a3a5a;color:#9fb6e8;}
+  .heat li.r1 .pos{background:#ffd028;color:#3d2f00;}
+  .heat li.r2 .pos{background:#cfd8e8;color:#1a2030;}
+  .heat li.adv{color:#d9ffe9;}
+  .heat li.adv .name{font-weight:700;}
+  .heat li.rep{color:#ffd9b3;}
+  .heat li .res{font-size:9.5px;font-weight:800;border-radius:4px;padding:1px 5px;margin-left:auto;}
+  .heat li.adv .res{background:#1f7a4d;color:#d9ffe9;}
+  .heat li.rep .res{background:#9a5a1e;color:#ffe6cc;}
+  .heat li.adv .tag,.heat li.rep .tag{margin-left:8px;}
+  .heat.done .hh span:first-child::after{content:' ✓';color:#52b788;}
+
   /* legend */
   .legend{display:flex;gap:18px;justify-content:center;font-size:13px;margin-top:4px;color:#cfe0ff;}
   .legend span{display:flex;align-items:center;gap:7px;}
@@ -139,12 +154,12 @@
         <div class="rtrack"><span class="lbl">Track</span> 🏁 Mario Bros. Circuit</div>
       </div>
       <div class="heats two">
-        <div class="heat"><div class="hh"><span>HEAT 1</span><span class="mix">2A · 2K</span></div>
+        <div class="heat done"><div class="hh"><span>HEAT 1</span><span class="mix">2A · 2K</span></div>
           <ul>
-            <li><span class="dot a"></span>Sean<span class="tag a">Adult</span></li>
-            <li><span class="dot a"></span>Dave<span class="tag a">Adult</span></li>
-            <li><span class="dot k"></span>Oscar<span class="tag k">Kid</span></li>
-            <li><span class="dot k"></span>Phoenix<span class="tag k">Kid</span></li>
+            <li class="adv r1"><span class="pos">1</span><span class="dot a"></span><span class="name">Dave</span><span class="res">→ R2</span><span class="tag a">Adult</span></li>
+            <li class="adv r2"><span class="pos">2</span><span class="dot k"></span><span class="name">Oscar</span><span class="res">→ R2</span><span class="tag k">Kid</span></li>
+            <li class="rep"><span class="pos">3</span><span class="dot a"></span><span class="name">Sean</span><span class="res">REP</span><span class="tag a">Adult</span></li>
+            <li class="rep"><span class="pos">4</span><span class="dot k"></span><span class="name">Phoenix</span><span class="res">REP</span><span class="tag k">Kid</span></li>
           </ul></div>
         <div class="heat"><div class="hh"><span>HEAT 2</span><span class="mix">2A · 2K</span></div>
           <ul>
