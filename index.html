@@ -79,6 +79,19 @@
   .heat li.adv .tag,.heat li.rep .tag{margin-left:8px;}
   .heat.done .hh span:first-child::after{content:' ✓';color:#52b788;}
 
+  /* live holding pens */
+  .pen{padding:6px 12px 12px;}
+  .pen .penlbl{font-size:12px;font-weight:800;letter-spacing:.4px;color:#9fb6e8;
+    text-transform:uppercase;margin:6px 0 6px;display:flex;align-items:center;gap:8px;}
+  .pen .penlbl .ct{background:#284a7a;color:#bcd6ff;border-radius:5px;padding:0 7px;font-size:11px;}
+  .pen .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .pen .chip{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    border-radius:7px;padding:3px 9px;border:1px solid var(--line);background:rgba(255,255,255,0.05);}
+  .pen .chip .dot{width:7px;height:7px;}
+  .pen.into .penlbl{color:#ffd9b3;}
+  .pen .none{font-size:12px;color:#7a8aa8;font-style:italic;}
+  .pen .pendraw{font-size:11.5px;color:#7a8aa8;font-style:italic;margin-top:8px;}
+
   /* legend */
   .legend{display:flex;gap:18px;justify-content:center;font-size:13px;margin-top:4px;color:#cfe0ff;}
   .legend span{display:flex;align-items:center;gap:7px;}
@@ -175,12 +188,12 @@
             <li class="rep"><span class="pos">3</span><span class="dot k"></span><span class="name">Ben</span><span class="res">REP</span><span class="tag k">Kid</span></li>
             <li class="rep"><span class="pos">4</span><span class="dot a"></span><span class="name">Alex</span><span class="res">REP</span><span class="tag a">Adult</span></li>
           </ul></div>
-        <div class="heat"><div class="hh"><span>HEAT 4</span><span class="mix">2A · 2K</span></div>
+        <div class="heat done"><div class="hh"><span>HEAT 4</span><span class="mix">2A · 2K</span></div>
           <ul>
-            <li><span class="dot a"></span>Mike<span class="tag a">Adult</span></li>
-            <li><span class="dot a"></span>Shell<span class="tag a">Adult</span></li>
-            <li><span class="dot k"></span>Georgia<span class="tag k">Kid</span></li>
-            <li><span class="dot k"></span>Annie<span class="tag k">Kid</span></li>
+            <li class="adv r1"><span class="pos">1</span><span class="dot a"></span><span class="name">Mike</span><span class="res">→ R2</span><span class="tag a">Adult</span></li>
+            <li class="adv r2"><span class="pos">2</span><span class="dot k"></span><span class="name">Georgia</span><span class="res">→ R2</span><span class="tag k">Kid</span></li>
+            <li class="rep"><span class="pos">3</span><span class="dot k"></span><span class="name">Annie</span><span class="res">REP</span><span class="tag k">Kid</span></li>
+            <li class="rep"><span class="pos">4</span><span class="dot a"></span><span class="name">Shell</span><span class="res">REP</span><span class="tag a">Adult</span></li>
           </ul></div>
         <div class="heat"><div class="hh"><span>HEAT 5</span><span class="mix">1A · 3K</span></div>
           <ul>
@@ -210,8 +223,19 @@
         <div class="rmeta">12 players (R1 bottom-2s) · 3 heats</div>
         <div class="rtrack"><span class="lbl">Track</span> 🏁 Koopa Troopa Beach</div>
       </div>
-      <div class="heats">
-        <div class="tbd">Heats A · B · C drawn after Round 1 — winner of each heat advances (3 total). The other 9 are out, but everyone raced twice.</div>
+      <div class="pen into">
+        <div class="penlbl">Into Repechage <span class="ct">8 of 12</span></div>
+        <div class="chips">
+          <div class="chip"><span class="dot a"></span>Sean</div>
+          <div class="chip"><span class="dot k"></span>Phoenix</div>
+          <div class="chip"><span class="dot k"></span>Imogen S</div>
+          <div class="chip"><span class="dot k"></span>Tilly</div>
+          <div class="chip"><span class="dot k"></span>Ben</div>
+          <div class="chip"><span class="dot a"></span>Alex</div>
+          <div class="chip"><span class="dot k"></span>Annie</div>
+          <div class="chip"><span class="dot a"></span>Shell</div>
+        </div>
+        <div class="pendraw">Heats A · B · C drawn after Round 1 completes (Heats 5–6 still to race). The other 9 are out, but everyone raced twice.</div>
       </div>
       <div class="rule"><b>Winner only</b> (1st place) of each heat advances → Round 2</div>
     </div>
@@ -226,7 +250,20 @@
         <div class="rmeta">15 players (12 qualifiers + 3 repechage winners) · 4 heats</div>
         <div class="rtrack"><span class="lbl">Track</span> 🏁 Crown City</div>
       </div>
-      <div class="heats"><div class="tbd">Heats drawn after the repechage — top 2 of each advance (8 total).</div></div>
+      <div class="pen">
+        <div class="penlbl">Through to Round 2 <span class="ct">8 of 12</span></div>
+        <div class="chips">
+          <div class="chip"><span class="dot a"></span>Dave</div>
+          <div class="chip"><span class="dot k"></span>Oscar</div>
+          <div class="chip"><span class="dot a"></span>Alan</div>
+          <div class="chip"><span class="dot a"></span>Mitch</div>
+          <div class="chip"><span class="dot a"></span>Lucas</div>
+          <div class="chip"><span class="dot k"></span>Ted B</div>
+          <div class="chip"><span class="dot a"></span>Mike</div>
+          <div class="chip"><span class="dot k"></span>Georgia</div>
+        </div>
+        <div class="pendraw">+ 3 repechage winners = 15. The 4 heats are seeded once Round 1 + repechage complete (winners spread, runners-up balanced).</div>
+      </div>
       <div class="rule"><b>Top 2</b> each heat advance → Round 3</div>
     </div>
   </section>
