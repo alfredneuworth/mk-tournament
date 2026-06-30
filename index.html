@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1b3e">
+<title>Mario Kart Tournament — 24 Players</title>
+<style>
+  :root{
+    --navy:#0d1b3e; --navy2:#142a5c; --card:rgba(255,255,255,0.06);
+    --line:rgba(255,255,255,0.12); --kid:#7cc4ff; --adult:#ffc27a;
+    --green:#52b788; --orange:#f4a261; --red:#e63946; --gold:#ffd028;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    background:linear-gradient(160deg,#0d1b3e 0%,#142a5c 100%);
+    color:#fff; min-height:100vh; line-height:1.5; padding-bottom:48px;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px;}
+  header{text-align:center;padding:30px 16px 18px;}
+  h1{font-size:30px;font-weight:800;letter-spacing:0.5px;line-height:1.15;}
+  h1 .k{color:var(--red);}
+  .tagline{color:#a9c0ff;font-size:14px;margin-top:8px;font-weight:500;}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:4px 12px;font-size:12px;font-weight:600;color:#cfe0ff;}
+  .pill b{color:#fff;}
+  section{margin-top:22px;}
+  .shead{font-size:13px;font-weight:800;letter-spacing:1.4px;color:#7fa8ff;
+    text-transform:uppercase;margin:0 4px 10px;display:flex;align-items:center;gap:8px;}
+  .shead::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* round cards */
+  .round{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;margin-bottom:14px;}
+  .round.final{border:2px solid var(--gold);background:linear-gradient(160deg,#2a2205 0%,#3d3208 100%);}
+  .rtop{padding:14px 16px 12px;border-bottom:1px solid var(--line);}
+  .rtop .rname{font-size:20px;font-weight:800;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .cc{font-size:12px;font-weight:800;border-radius:6px;padding:2px 9px;background:var(--red);color:#fff;}
+  .cc.c100{background:var(--orange);color:#3d1f00;} .cc.c150{background:var(--gold);color:#3d2f00;}
+  .rmeta{font-size:13px;color:#c7d6ff;margin-top:6px;}
+  .rtrack{font-size:14px;margin-top:8px;font-weight:700;color:#fff;
+    background:rgba(255,255,255,0.07);border-radius:8px;padding:7px 11px;display:inline-flex;gap:7px;align-items:center;}
+  .rtrack .lbl{color:#9fb6e8;font-weight:600;font-size:12px;}
+  .rule{font-size:13px;color:#ffd6a5;padding:11px 16px;font-weight:600;
+    background:rgba(255,210,165,0.06);border-top:1px solid var(--line);}
+  .rule b{color:#fff;}
+
+  /* heats */
+  .heats{padding:8px 12px 12px;display:grid;gap:8px;}
+  @media(min-width:560px){.heats.two{grid-template-columns:1fr 1fr;}}
+  .heat{background:rgba(255,255,255,0.05);border:1px solid var(--line);
+    border-radius:11px;padding:10px 12px;}
+  .heat .hh{display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;font-weight:800;color:#9fc2ff;margin-bottom:6px;letter-spacing:0.5px;}
+  .heat .mix{background:#284a7a;color:#bcd6ff;border-radius:5px;padding:1px 7px;font-size:11px;}
+  .heat ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+  .heat li{font-size:15px;padding:2px 0;display:flex;align-items:center;gap:8px;}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .dot.k{background:var(--kid);} .dot.a{background:var(--adult);}
+  .tag{font-size:10px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:auto;}
+  .tag.k{background:rgba(124,196,255,0.15);color:var(--kid);}
+  .tag.a{background:rgba(255,194,122,0.15);color:var(--adult);}
+  .tbd{font-size:13px;color:#7a8aa8;font-style:italic;text-align:center;padding:14px;}
+
+  /* legend */
+  .legend{display:flex;gap:18px;justify-content:center;font-size:13px;margin-top:4px;color:#cfe0ff;}
+  .legend span{display:flex;align-items:center;gap:7px;}
+
+  /* flow strip */
+  .flow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px;}
+  .fstep{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:8px 10px;font-size:12px;text-align:center;flex:1;min-width:88px;}
+  .fstep .n{font-size:18px;font-weight:800;color:var(--green);}
+  .fstep .l{color:#9fb6e8;font-size:11px;margin-top:2px;}
+  .fstep.f .n{color:var(--gold);}
+
+  /* knockout route */
+  .route{padding:0 16px 14px;}
+  .route ol{list-style:none;counter-reset:r;}
+  .route li{counter-increment:r;font-size:14px;padding:7px 0 7px 34px;position:relative;
+    border-bottom:1px solid rgba(255,255,255,0.07);}
+  .route li:last-child{border-bottom:none;}
+  .route li::before{content:counter(r);position:absolute;left:0;top:6px;
+    width:24px;height:24px;border-radius:50%;background:var(--gold);color:#3d2f00;
+    font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;}
+  .route li .ko{font-size:11px;color:#ff9aa5;font-weight:700;margin-left:8px;}
+  .route .note{font-size:12px;color:#ffd6a5;margin-top:10px;line-height:1.45;}
+
+  footer{text-align:center;font-size:12px;color:#8aa0d0;margin-top:30px;padding:0 16px;line-height:1.6;}
+  .imnote{background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:10px;
+    padding:10px 14px;font-size:13px;color:#cfe0ff;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1><span class="k">MARIO KART</span><br>TOURNAMENT</h1>
+    <div class="tagline">Mario Kart World · Nintendo Switch 2 · 24 Players</div>
+    <div class="pillrow">
+      <span class="pill"><b>4</b> max per match</span>
+      <span class="pill">Everyone races <b>≥2×</b></span>
+      <span class="pill"><b>4 rounds</b> + repechage</span>
+      <span class="pill"><b>4</b> in the Grand Final</span>
+    </div>
+  </header>
+
+  <!-- FORMAT -->
+  <section>
+    <div class="shead">How it works</div>
+    <div class="flow">
+      <div class="fstep"><div class="n">24</div><div class="l">Round 1<br>6 heats</div></div>
+      <div class="fstep"><div class="n">12</div><div class="l">→ Round 2</div></div>
+      <div class="fstep"><div class="n">+3</div><div class="l">Repechage<br>winners</div></div>
+      <div class="fstep"><div class="n">8</div><div class="l">→ Round 3</div></div>
+      <div class="fstep"><div class="n">4</div><div class="l">→ Round 4</div></div>
+      <div class="fstep f"><div class="n">🏆</div><div class="l">Grand<br>Final</div></div>
+    </div>
+    <div class="imnote">
+      Finish <b>top 2</b> in your Round 1 heat and you go straight through. Finish bottom 2 and
+      you drop to the <b>repechage</b> — a second-chance race where the <b>winner of each heat</b>
+      stays alive. Everyone gets at least two races. Engine class and track difficulty climb every round.
+    </div>
+    <div class="legend" style="margin-top:14px;">
+      <span><span class="dot a"></span> Adult</span>
+      <span><span class="dot k"></span> Kid</span>
+    </div>
+  </section>
+
+  <!-- ROUND 1 -->
+  <section>
+    <div class="shead">Round 1 · Qualifying</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Round 1 <span class="cc">50cc</span></div>
+        <div class="rmeta">24 players · 6 heats · top 2 advance, bottom 2 → repechage</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Mario Bros. Circuit</div>
+      </div>
+      <div class="heats two">
+        <div class="heat"><div class="hh"><span>HEAT 1</span><span class="mix">2A · 2K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Sean<span class="tag a">Adult</span></li>
+            <li><span class="dot a"></span>Dave<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Oscar<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Phoenix<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 2</span><span class="mix">2A · 2K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Mitch<span class="tag a">Adult</span></li>
+            <li><span class="dot a"></span>Alan<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Imogen S<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Tilly<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 3</span><span class="mix">2A · 2K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Lucas<span class="tag a">Adult</span></li>
+            <li><span class="dot a"></span>Alex<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Ben<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Ted B<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 4</span><span class="mix">2A · 2K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Mike<span class="tag a">Adult</span></li>
+            <li><span class="dot a"></span>Shell<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Georgia<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Annie<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 5</span><span class="mix">1A · 3K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Hayden<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Jackson<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Imogen M<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Ted J<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 6</span><span class="mix">1A · 3K</span></div>
+          <ul>
+            <li><span class="dot a"></span>Marty<span class="tag a">Adult</span></li>
+            <li><span class="dot k"></span>Isaac<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Tom<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Mollie<span class="tag k">Kid</span></li>
+          </ul></div>
+      </div>
+      <div class="rule"><b>Top 2</b> → Round 2 &nbsp;·&nbsp; <b>Bottom 2</b> → Repechage</div>
+    </div>
+  </section>
+
+  <!-- REPECHAGE -->
+  <section>
+    <div class="shead">Repechage · Second Chance</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Repechage <span class="cc">50cc</span></div>
+        <div class="rmeta">12 players (R1 bottom-2s) · 3 heats</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Koopa Troopa Beach</div>
+      </div>
+      <div class="heats">
+        <div class="tbd">Heats A · B · C drawn after Round 1 — winner of each heat advances (3 total). The other 9 are out, but everyone raced twice.</div>
+      </div>
+      <div class="rule"><b>Winner only</b> (1st place) of each heat advances → Round 2</div>
+    </div>
+  </section>
+
+  <!-- ROUND 2 -->
+  <section>
+    <div class="shead">Round 2 · Semifinal</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Round 2 <span class="cc c100">100cc</span></div>
+        <div class="rmeta">15 players (12 qualifiers + 3 repechage winners) · 4 heats</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Crown City</div>
+      </div>
+      <div class="heats"><div class="tbd">Heats drawn after the repechage — top 2 of each advance (8 total).</div></div>
+      <div class="rule"><b>Top 2</b> each heat advance → Round 3</div>
+    </div>
+  </section>
+
+  <!-- ROUND 3 -->
+  <section>
+    <div class="shead">Round 3 · Qualifier</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Round 3 <span class="cc c150">150cc</span></div>
+        <div class="rmeta">8 players · 2 heats</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Bowser's Castle</div>
+      </div>
+      <div class="heats"><div class="tbd">Heats drawn after Round 2 — top 2 of each advance (4 total).</div></div>
+      <div class="rule"><b>Top 2</b> each heat advance → Grand Final</div>
+    </div>
+  </section>
+
+  <!-- GRAND FINAL -->
+  <section>
+    <div class="shead">🏆 Round 4 · Grand Final</div>
+    <div class="round final">
+      <div class="rtop">
+        <div class="rname">Grand Final <span class="cc c150">150cc</span></div>
+        <div class="rmeta">4 finalists · Knockout Tour</div>
+        <div class="rtrack"><span class="lbl">Rally</span> 🏁 Golden Rally</div>
+      </div>
+      <div class="route">
+        <p style="font-size:13px;color:#ffd6a5;margin:12px 0 10px;font-weight:600;">
+          The finale is a <b>Knockout Tour</b> — one continuous race across six tracks, with
+          checkpoint eliminations along the way. Last driver standing takes the crown.
+        </p>
+        <ol>
+          <li>Desert Hills</li>
+          <li>Mario Bros. Circuit</li>
+          <li>Choco Mountain</li>
+          <li>Moo Moo Meadows</li>
+          <li>Mario Circuit</li>
+          <li>Acorn Heights <span class="ko">FINISH</span></li>
+        </ol>
+        <div class="note">
+          One race, six segments, run back-to-back. Trailing drivers are knocked out at the
+          checkpoints between tracks until the leaders fight it out to the finish line.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Two Imogens in the field — shown as <b>Imogen S</b> (Heat 2) and <b>Imogen M</b> (Heat 5).<br>
+    Engine class &amp; track difficulty climb each round: 50 → 50 → 100 → 150 → 150cc.<br>
+    <span style="color:#5e74a8;">Mario Kart Tournament · 24 players · good luck out there 🏁</span>
+  </footer>
+
+</div>
+</body>
+</html>
