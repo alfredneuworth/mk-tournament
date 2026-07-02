@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1b3e">
+<title>Kids Mario Kart Tournament — 11 Racers</title>
+<style>
+  :root{
+    --navy:#0d1b3e; --navy2:#142a5c; --card:rgba(255,255,255,0.06);
+    --line:rgba(255,255,255,0.12); --kid:#7cc4ff; --adult:#ffc27a;
+    --green:#52b788; --orange:#f4a261; --red:#e63946; --gold:#ffd028;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    background:linear-gradient(160deg,#0d1b3e 0%,#142a5c 100%);
+    color:#fff; min-height:100vh; line-height:1.5; padding-bottom:48px;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px;}
+  header{text-align:center;padding:30px 16px 18px;}
+  h1{font-size:30px;font-weight:800;letter-spacing:0.5px;line-height:1.15;}
+  h1 .k{color:var(--red);}
+  .tagline{color:#a9c0ff;font-size:14px;margin-top:8px;font-weight:500;}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:4px 12px;font-size:12px;font-weight:600;color:#cfe0ff;}
+  .pill b{color:#fff;}
+  section{margin-top:22px;}
+  .shead{font-size:13px;font-weight:800;letter-spacing:1.4px;color:#7fa8ff;
+    text-transform:uppercase;margin:0 4px 10px;display:flex;align-items:center;gap:8px;}
+  .shead::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* round cards */
+  .round{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;margin-bottom:14px;}
+  .round.final{border:2px solid var(--gold);background:linear-gradient(160deg,#2a2205 0%,#3d3208 100%);}
+  .rtop{padding:14px 16px 12px;border-bottom:1px solid var(--line);}
+  .rtop .rname{font-size:20px;font-weight:800;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .cc{font-size:12px;font-weight:800;border-radius:6px;padding:2px 9px;background:var(--red);color:#fff;}
+  .cc.c100{background:var(--orange);color:#3d1f00;} .cc.c150{background:var(--gold);color:#3d2f00;}
+  .rmeta{font-size:13px;color:#c7d6ff;margin-top:6px;}
+  .rtrack{font-size:14px;margin-top:8px;font-weight:700;color:#fff;
+    background:rgba(255,255,255,0.07);border-radius:8px;padding:7px 11px;display:inline-flex;gap:7px;align-items:center;}
+  .rtrack .lbl{color:#9fb6e8;font-weight:600;font-size:12px;}
+  .rule{font-size:13px;color:#ffd6a5;padding:11px 16px;font-weight:600;
+    background:rgba(255,210,165,0.06);border-top:1px solid var(--line);}
+  .rule b{color:#fff;}
+
+  /* heats */
+  .heats{padding:8px 12px 12px;display:grid;gap:8px;}
+  @media(min-width:560px){.heats.two{grid-template-columns:1fr 1fr;}}
+  .heat{background:rgba(255,255,255,0.05);border:1px solid var(--line);
+    border-radius:11px;padding:10px 12px;}
+  .heat .hh{display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;font-weight:800;color:#9fc2ff;margin-bottom:6px;letter-spacing:0.5px;}
+  .heat .mix{background:#284a7a;color:#bcd6ff;border-radius:5px;padding:1px 7px;font-size:11px;}
+  .heat ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+  .heat li{font-size:15px;padding:2px 0;display:flex;align-items:center;gap:8px;}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .dot.k{background:var(--kid);} .dot.a{background:var(--adult);}
+  .tag{font-size:10px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:auto;}
+  .tag.k{background:rgba(124,196,255,0.15);color:var(--kid);}
+  .tag.a{background:rgba(255,194,122,0.15);color:var(--adult);}
+  .tbd{font-size:13px;color:#7a8aa8;font-style:italic;text-align:center;padding:14px;}
+
+  /* results */
+  .heat li .pos{width:19px;height:19px;border-radius:50%;flex:none;display:flex;
+    align-items:center;justify-content:center;font-size:11px;font-weight:800;
+    background:#2a3a5a;color:#9fb6e8;}
+  .heat li.r1 .pos{background:#ffd028;color:#3d2f00;}
+  .heat li.r2 .pos{background:#cfd8e8;color:#1a2030;}
+  .heat li.adv{color:#d9ffe9;}
+  .heat li.adv .name{font-weight:700;}
+  .heat li.rep{color:#ffd9b3;}
+  .heat li .res{font-size:9.5px;font-weight:800;border-radius:4px;padding:1px 5px;margin-left:auto;}
+  .heat li.adv .res{background:#1f7a4d;color:#d9ffe9;}
+  .heat li.rep .res{background:#9a5a1e;color:#ffe6cc;}
+  .heat li.rep .res:not(:empty){}
+  .heat li .res.out{background:#5a2030;color:#ffc2cf;}
+  .heat li.rep:has(.res.out){color:#a88;opacity:.78;}
+  .heat li.rep:has(.res.out) .pos{background:#3a2030;color:#a88;}
+  .heat li.adv .tag,.heat li.rep .tag{margin-left:8px;}
+  .heat.done .hh span:first-child::after{content:' ✓';color:#52b788;}
+
+  /* live holding pens */
+  .pen{padding:6px 12px 12px;}
+  .pen .penlbl{font-size:12px;font-weight:800;letter-spacing:.4px;color:#9fb6e8;
+    text-transform:uppercase;margin:6px 0 6px;display:flex;align-items:center;gap:8px;}
+  .pen .penlbl .ct{background:#284a7a;color:#bcd6ff;border-radius:5px;padding:0 7px;font-size:11px;}
+  .pen .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .pen .chip{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    border-radius:7px;padding:3px 9px;border:1px solid var(--line);background:rgba(255,255,255,0.05);}
+  .pen .chip .dot{width:7px;height:7px;}
+  .pen.into .penlbl{color:#ffd9b3;}
+  .pen .none{font-size:12px;color:#7a8aa8;font-style:italic;}
+  .pen .pendraw{font-size:11.5px;color:#7a8aa8;font-style:italic;margin-top:8px;}
+  .heat li.slot{color:#7a8aa8;font-style:italic;}
+  .heat li.slot .dot{background:#3a4a6a;}
+  .heat li.slot .tag{background:rgba(255,255,255,0.06);color:#7a8aa8;}
+
+  /* legend */
+  .legend{display:flex;gap:18px;justify-content:center;font-size:13px;margin-top:4px;color:#cfe0ff;}
+  .legend span{display:flex;align-items:center;gap:7px;}
+
+  /* flow strip */
+  .flow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px;}
+  .fstep{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:8px 10px;font-size:12px;text-align:center;flex:1;min-width:88px;}
+  .fstep .n{font-size:18px;font-weight:800;color:var(--green);}
+  .fstep .l{color:#9fb6e8;font-size:11px;margin-top:2px;}
+  .fstep.f .n{color:var(--gold);}
+
+  /* knockout route */
+  .route{padding:0 16px 14px;}
+  .route ol{list-style:none;counter-reset:r;}
+  .route li{counter-increment:r;font-size:14px;padding:7px 0 7px 34px;position:relative;
+    border-bottom:1px solid rgba(255,255,255,0.07);}
+  .route li:last-child{border-bottom:none;}
+  .route li::before{content:counter(r);position:absolute;left:0;top:6px;
+    width:24px;height:24px;border-radius:50%;background:var(--gold);color:#3d2f00;
+    font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;}
+  .route li .ko{font-size:11px;color:#ff9aa5;font-weight:700;margin-left:8px;}
+  .route .note{font-size:12px;color:#ffd6a5;margin-top:10px;line-height:1.45;}
+
+  footer{text-align:center;font-size:12px;color:#8aa0d0;margin-top:30px;padding:0 16px;line-height:1.6;}
+  .imnote{background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:10px;
+    padding:10px 14px;font-size:13px;color:#cfe0ff;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1><span class="k">KIDS KART</span><br>TOURNAMENT</h1>
+    <div class="tagline">Mario Kart World · Nintendo Switch 2 · 11 Racers · Kids Only</div>
+    <div class="pillrow">
+      <span class="pill"><b>4</b> max per match</span>
+      <span class="pill">Everyone races <b>≥2×</b></span>
+      <span class="pill"><b>3 rounds</b> + repechage</span>
+      <span class="pill">Champion crowned on <b>Rainbow Road</b></span>
+    </div>
+    <div class="flow" style="margin-top:14px;">
+      <div class="fstep"><div class="n">11</div><div class="l">Heats (3)</div></div>
+      <div class="fstep"><div class="n">5</div><div class="l">Repechage</div></div>
+      <div class="fstep"><div class="n">8</div><div class="l">Semifinals</div></div>
+      <div class="fstep f"><div class="n">4</div><div class="l">Grand Final</div></div>
+    </div>
+  </header>
+
+  <!-- ROUND 1 -->
+  <section>
+    <div class="shead">Round 1 · Qualifying Heats</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Round 1 <span class="cc">50cc</span></div>
+        <div class="rmeta">11 racers · 3 heats · seeded on main-tournament form</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Mario Bros. Circuit</div>
+      </div>
+      <div class="heats two">
+        <div class="heat"><div class="hh"><span>HEAT 1</span><span class="mix">4 racers</span></div>
+          <ul>
+            <li><span class="dot k"></span>Ben<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Jackson<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Annie<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Mollie <small style="color:#9fb6e8;">(w/ Lucas)</small><span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 2</span><span class="mix">4 racers</span></div>
+          <ul>
+            <li><span class="dot k"></span>Tom<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Ted B<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Tilly<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Isaac<span class="tag k">Kid</span></li>
+          </ul></div>
+        <div class="heat"><div class="hh"><span>HEAT 3</span><span class="mix">3 racers</span></div>
+          <ul>
+            <li><span class="dot k"></span>Oscar<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Imogen L<span class="tag k">Kid</span></li>
+            <li><span class="dot k"></span>Imogen S<span class="tag k">Kid</span></li>
+          </ul></div>
+      </div>
+      <div class="rule"><b>Top 2</b> each heat advance → Semifinals · everyone else gets a second chance in the repechage</div>
+    </div>
+  </section>
+
+  <!-- REPECHAGE -->
+  <section>
+    <div class="shead">Repechage · Second Chance</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Repechage <span class="cc">50cc</span></div>
+        <div class="rmeta">5 racers · 2 heats · winner of each advances</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Koopa Troopa Beach</div>
+      </div>
+      <div class="heats two">
+        <div class="heat"><div class="hh"><span>HEAT A</span><span class="mix">3 racers</span></div>
+          <ul><li class="tbd" style="display:block;">Filled by 3rd/4th from Round 1</li></ul></div>
+        <div class="heat"><div class="hh"><span>HEAT B</span><span class="mix">2 racers</span></div>
+          <ul><li class="tbd" style="display:block;">Filled by 3rd/4th from Round 1</li></ul></div>
+      </div>
+      <div class="rule"><b>Winner only</b> of each heat advances → Semifinals · seeded so no two from the same R1 heat meet again</div>
+    </div>
+  </section>
+
+  <!-- SEMIFINALS -->
+  <section>
+    <div class="shead">Semifinals</div>
+    <div class="round">
+      <div class="rtop">
+        <div class="rname">Semifinals <span class="cc c100">100cc</span></div>
+        <div class="rmeta">8 racers (6 qualifiers + 2 repechage winners) · 2 heats</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🏁 Moo Moo Meadows</div>
+      </div>
+      <div class="heats two">
+        <div class="heat"><div class="hh"><span>SEMI 1</span><span class="mix">4 racers</span></div>
+          <ul><li class="tbd" style="display:block;">Seeded after repechage</li></ul></div>
+        <div class="heat"><div class="hh"><span>SEMI 2</span><span class="mix">4 racers</span></div>
+          <ul><li class="tbd" style="display:block;">Seeded after repechage</li></ul></div>
+      </div>
+      <div class="rule"><b>Top 2</b> each semi advance → Grand Final · heat winners split, no R1 rematch where avoidable</div>
+    </div>
+  </section>
+
+  <!-- GRAND FINAL -->
+  <section>
+    <div class="shead">🏆 Grand Final</div>
+    <div class="round final">
+      <div class="rtop">
+        <div class="rname">Grand Final <span class="cc c150">150cc</span></div>
+        <div class="rmeta">4 finalists · one race for the crown</div>
+        <div class="rtrack"><span class="lbl">Track</span> 🌈 Rainbow Road</div>
+      </div>
+      <div class="heats">
+        <div class="heat"><div class="hh"><span>THE FINAL</span><span class="mix">4 racers</span></div>
+          <ul><li class="tbd" style="display:block;">Awaiting the semifinal results…</li></ul></div>
+      </div>
+      <div class="rule">Winner takes the <b>Kids Kart Champion</b> crown 👑</div>
+    </div>
+  </section>
+
+  <footer>
+    Two Imogens in the field — shown as <b>Imogen S</b> and <b>Imogen L</b>.<br>
+    Mollie races with Lucas as co-pilot. Engine class climbs each round: 50 → 50 → 100 → 150cc.<br>
+    <span style="color:#5e74a8;">Kids Kart Tournament · 11 racers · good luck out there 🏁</span>
+  </footer>
+
+</div>
+</body>
+</html>
